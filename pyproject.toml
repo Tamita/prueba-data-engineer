@@ -1,0 +1,29 @@
+[project]
+name = "prueba-data-engineer"
+version = "0.1.0"
+description = "Pipeline para desarrollar el ejercicio de acercamiento al cargo de la empresa Pragma para el rol de data engineer, es un pipeline que procesa chunks de archivos csv"
+authors = [
+    {name = "Tatiana Escobar"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pandas (>=3.0.5,<4.0.0)",
+    "psycopg (>=3.3.5,<4.0.0)",
+    "mypy (>=2.3.1,<3.0.0)"
+]
+
+
+[dependency-groups]
+dev = [
+    "pytest (>=9.1.1,<10.0.0)",
+    "ruff (>=0.16.5,<0.17.0)",
+    "black (>=26.5.1,<27.0.0)"
+]
+
+[tool.poetry]
+package-mode = false
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
