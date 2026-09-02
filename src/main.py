@@ -4,9 +4,9 @@ from src.config.settings import (
     RAW_FILE_1,
 )
 from src.extract.data_extractor import read_raw_csv
-from src.transform.data_transformer import transform_dataframe
 from src.load.data_loader import load_to_postgres
 from src.load.db_bootstrap import ensure_database_exists
+from src.transform.data_transformer import transform_dataframe
 from src.utils.logging_config import setup_logging
 
 logger = logging.getLogger(__name__)
@@ -18,8 +18,9 @@ def main() -> None:
     logger.info("Inicio del pipeline")
 
     ensure_database_exists()
-    df_raw = read_raw_csv(RAW_FILE_1)
-    df_transformed = transform_dataframe(df_raw, source_file_name=RAW_FILE_1.name)
+    file_path = RAW_FILE_1
+    df_raw = read_raw_csv(file_path)
+    df_transformed = transform_dataframe(df_raw, source_file_name=file_path.name)
     load_to_postgres(df_transformed)
 
     print(df_transformed)

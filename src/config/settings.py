@@ -1,5 +1,5 @@
-from pathlib import Path
 import os
+from pathlib import Path
 
 from dotenv import load_dotenv
 
@@ -23,4 +23,5 @@ POSTGRES_DB = os.getenv("POSTGRES_DB", "prueba_data_engineer")
 POSTGRES_USER = os.getenv("POSTGRES_USER", "postgres")
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "postgres")
 POSTGRES_SCHEMA = os.getenv("POSTGRES_SCHEMA", "public")
-POSTGRES_TABLE = os.getenv("POSTGRES_TABLE", "raw_jobs")
+POSTGRES_TABLE = os.getenv("POSTGRES_TABLE", "transactions")
+POSTGRES_TABLE_STATS = os.getenv("POSTGRES_TABLE", "pipeline_stats")
