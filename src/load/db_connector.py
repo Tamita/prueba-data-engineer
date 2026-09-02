@@ -48,3 +48,4 @@ def create_postgres_engine() -> Engine:
     except Exception:
         logger.exception("Error al crear el engine de PostgreSQL")
         raise
+

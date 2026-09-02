@@ -1,10 +1,10 @@
 import logging
 
 from src.config.settings import (
-    RAW_FILE_1,
+    RAW_FILE_1, RAW_FILE_2, RAW_FILE_3, RAW_FILE_4, RAW_FILE_5, RAW_FILE_VALIDATION
 )
 from src.extract.data_extractor import read_raw_csv
-from src.load.data_loader import load_transactions_to_postgres, load_stats_to_postgres
+from src.load.data_loader import load_transactions_to_postgres, load_stats_to_postgres, update_stats_accumulator
 from src.load.db_bootstrap import ensure_database_exists
 from src.transform.data_transformer import get_stats_info, transform_dataframe
 from src.utils.logging_config import setup_logging
@@ -23,10 +23,10 @@ def main() -> None:
     df_transformed = transform_dataframe(df_raw, source_file_name=file_path.name)
     df_statistics = get_stats_info(df_transformed)
     load_transactions_to_postgres(df_transformed)
-    load_stats_to_postgres(df_statistics)
+    # load_stats_to_postgres(df_statistics)
+    update_stats_accumulator(df_statistics)
 
-    # print(df_transformed)
-    print(df_statistics)
+    
     logger.info("Pipeline se ejecutó exitosamente")
 
 
