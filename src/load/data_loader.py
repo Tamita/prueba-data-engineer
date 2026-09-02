@@ -1,7 +1,7 @@
 import logging
-from sqlalchemy import text
 
 import pandas as pd
+from sqlalchemy import text
 
 from src.config.settings import POSTGRES_SCHEMA, POSTGRES_TABLE, POSTGRES_TABLE_STATS
 from src.load.db_connector import create_postgres_engine
@@ -69,21 +69,31 @@ def update_stats_accumulator(new_stats: pd.DataFrame) -> None:
 
         with engine.connect() as conn:
             # Crear tabla si no existe
-            conn.execute(
-                text(f"""
+            conn.execute(text(f"""
                     CREATE TABLE IF NOT EXISTS {POSTGRES_SCHEMA}.{POSTGRES_TABLE_STATS} (
                         total_rows INTEGER DEFAULT 0,
                         price_sum NUMERIC DEFAULT 0,
                         price_min NUMERIC,
                         price_max NUMERIC
                     )
-                """)
-            )
+                """))
 
             new_rows = int(new_stats["total_rows"].iloc[0])
-            new_sum = float(new_stats["price_sum"].iloc[0]) if pd.notna(new_stats["price_sum"].iloc[0]) else None
-            new_min = float(new_stats["price_min"].iloc[0]) if pd.notna(new_stats["price_min"].iloc[0]) else None
-            new_max = float(new_stats["price_max"].iloc[0]) if pd.notna(new_stats["price_max"].iloc[0]) else None
+            new_sum = (
+                float(new_stats["price_sum"].iloc[0])
+                if pd.notna(new_stats["price_sum"].iloc[0])
+                else None
+            )
+            new_min = (
+                float(new_stats["price_min"].iloc[0])
+                if pd.notna(new_stats["price_min"].iloc[0])
+                else None
+            )
+            new_max = (
+                float(new_stats["price_max"].iloc[0])
+                if pd.notna(new_stats["price_max"].iloc[0])
+                else None
+            )
 
             # Verificar si existe al menos una fila
             result = conn.execute(
