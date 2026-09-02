@@ -15,7 +15,7 @@ RAW_FILE_2 = RAW_DIR / "2012-2.csv"
 RAW_FILE_3 = RAW_DIR / "2012-3.csv"
 RAW_FILE_4 = RAW_DIR / "2012-4.csv"
 RAW_FILE_5 = RAW_DIR / "2012-5.csv"
-RAW_FILE_VALIDATION = RAW_DIR / "validation"
+RAW_FILE_VALIDATION = RAW_DIR / "validation.csv"
 
 POSTGRES_HOST = os.getenv("POSTGRES_HOST", "localhost")
 POSTGRES_PORT = int(os.getenv("POSTGRES_PORT", "5432"))
@@ -24,4 +24,4 @@ POSTGRES_USER = os.getenv("POSTGRES_USER", "postgres")
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "postgres")
 POSTGRES_SCHEMA = os.getenv("POSTGRES_SCHEMA", "public")
 POSTGRES_TABLE = os.getenv("POSTGRES_TABLE", "transactions")
-POSTGRES_TABLE_STATS = os.getenv("POSTGRES_TABLE", "pipeline_stats")
+POSTGRES_TABLE_STATS = os.getenv("POSTGRES_STATS_TABLE", "pipeline_stats")

@@ -123,3 +123,52 @@ def transform_dataframe(
             "Error al completar el pipeline de transformación del DataFrame"
         )
         raise
+
+
+def get_stats_info(df: pd.DataFrame) -> pd.DataFrame:
+    """Genera estadísticas acumulables del DataFrame para cargar en la base de datos.
+
+    Calcula:
+    - total_rows: Total de filas del DataFrame.
+    - price_sum: Suma del campo 'price' (para calcular promedio después).
+    - price_min: Valor mínimo del campo 'price'.
+    - price_max: Valor máximo del campo 'price'.
+
+    Args:
+        df: DataFrame transformado con la columna 'price'.
+
+    Returns:
+        DataFrame con una fila y columnas: total_rows, price_sum, price_min, price_max.
+
+    Raises:
+        ValueError: Si falta la columna 'price' en el DataFrame.
+        Exception: Cualquier error se registra en el log y se relanza.
+    """
+    logger.info("Generando estadísticas acumulables del DataFrame")
+
+    try:
+        if "price" not in df.columns:
+            logger.error("No se encontró la columna 'price' en el DataFrame")
+            raise ValueError("No se encontró la columna 'price' en el DataFrame")
+
+        stats = {
+            "total_rows": [len(df)],
+            "price_sum": [df["price"].sum()],
+            "price_min": [df["price"].min()],
+            "price_max": [df["price"].max()],
+        }
+
+        df_stats = pd.DataFrame(stats)
+
+        logger.info(
+            "Estadísticas generadas: total_rows=%s, price_sum=%s, price_min=%s, price_max=%s",
+            len(df),
+            df["price"].sum(),
+            df["price"].min(),
+            df["price"].max(),
+        )
+        return df_stats
+
+    except Exception:
+        logger.exception("Error al generar estadísticas del DataFrame")
+        raise

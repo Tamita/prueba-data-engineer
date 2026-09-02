@@ -7,6 +7,7 @@ SRC := src
 TESTS := tests
 
 RUN_MODULE := src.main
+RUN_FULL := scripts.run_full_files
 
 .DEFAULT_GOAL := help
 
@@ -41,7 +42,10 @@ test-cov: ## Run tests with coverage report
 	$(CMD) pytest $(TESTS) --cov=$(SRC) --cov-report=term-missing
 
 run: ## Run the data pipeline
-	$(CMD) python -m $(RUN_MODULE)
+	$(CMD) python -m $(RUN_MODULE) $(FILE)
+
+run-full: ## Run the data pipeline
+	$(CMD) python -m $(RUN_FULL)
 
 fix: format lint-fix ## Apply automatic formatting and lint fixes
 
