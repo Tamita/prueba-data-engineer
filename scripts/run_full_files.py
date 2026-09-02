@@ -5,7 +5,7 @@ import logging
 import subprocess
 from pathlib import Path
 
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, inspect, text
 from src.config.settings import (
     POSTGRES_USER,
     POSTGRES_PASSWORD,
@@ -34,11 +34,21 @@ def get_db_engine():
     )
 
 
+def table_exists(engine, table_name: str) -> bool:
+    """Verifica si una tabla existe en el esquema 'public'."""
+    return inspect(engine).has_table(table_name, schema="public")
+
+
 def show_pipeline_stats(engine):
     """Muestra estadísticas de pipeline_stats."""
     logger.info("=" * 50)
     logger.info("Estadísticas de pipeline_stats:")
     logger.info("=" * 50)
+
+    if not table_exists(engine, "pipeline_stats"):
+        logger.info("La tabla pipeline_stats aún no existe (sin datos)")
+        logger.info("")
+        return
 
     with engine.connect() as conn:
         result = conn.execute(text("""
@@ -71,6 +81,11 @@ def show_transactions_stats(engine):
     logger.info("=" * 50)
     logger.info("Estadísticas de transactions:")
     logger.info("=" * 50)
+
+    if not table_exists(engine, "transactions"):
+        logger.info("La tabla transactions aún no existe (sin datos)")
+        logger.info("")
+        return
 
     with engine.connect() as conn:
         result = conn.execute(text("""

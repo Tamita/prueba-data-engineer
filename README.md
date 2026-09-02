@@ -54,6 +54,8 @@ Procesar el pipeline completo (los 5 archivos de datos, luego el de validación,
 make run-full
 ```
 
+El resultado de una ejecución de `make run-full` (log completo y un resumen de las estadísticas obtenidas) queda documentado en [`resultados.md`](resultados.md), en la raíz del proyecto.
+
 ## Tablas generadas
 
 - **`transactions`** (`POSTGRES_TABLE`): tabla de staging con los datos transformados del archivo procesado más reciente. Se reemplaza (`if_exists='replace'`) en cada corrida individual del pipeline.
